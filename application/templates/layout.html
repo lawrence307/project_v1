@@ -32,6 +32,8 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ml-auto mr-3">
+                                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
                                 <a class="nav-item nav-link" href="{{ url_for('add_expense') }}">Add</a>
                                 <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
                             </div>
@@ -42,7 +44,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-10"></div>
+            <div class="col-md-8"></div>
                 {% with messages = get_flashed_messages(with_categories = True) %}
                     {% if messages %}  
                         {% for category, message in messages %}

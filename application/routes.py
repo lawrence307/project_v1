@@ -1,6 +1,6 @@
 from application import app
 from flask import render_template, url_for, redirect,flash, get_flashed_messages
-from application.form import UserDataForm
+from application.form import UserDataForm, RegistrationForm, LoginForm
 from application.models import IncomeExpenses
 from application import db
 import json
@@ -9,6 +9,27 @@ import json
 def index():
     entries = IncomeExpenses.query.order_by(IncomeExpenses.date.desc()).all()
     return render_template('index.html', entries = entries)
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('add'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+            flash('You have been logged in!', 'success')
+            return redirect(url_for('add'))
+        else:
+            flash('Login Unsuccessful. Please check username and password', 'danger')
+    return render_template('login.html', title='Login', form=form)
+
 
 
 @app.route('/add', methods = ["POST", "GET"])
